@@ -17,6 +17,7 @@
           <div class="spacer"></div>
       
           <div class="form-group">
+            // 1 form group gồm 3 phần, label, thẻ input và 1 thẻ span để báo lỗi
             <label for="fullname" class="form-label">Tên đầy đủ</label>
             <input id="fullname" name="fullname" type="text" placeholder="VD: Sơn Đặng" class="form-control">
             <span class="form-message"></span>
@@ -44,6 +45,22 @@
         </form>
       
       </div>
-    <script src="./main.js"></script>
+    <script src="./validator.js"></script>
+    <script>
+        // Mong muốn của chúng ta
+        Validator({
+    form: '#form-1',
+    errorSelector: '.form-message',
+    rules: [
+        //truyền vô css selector mình muốn 
+        // chạy 2 hàm dưới để nhận lại 
+        Validator.isRequired('#fullname'),
+        Validator.isEmail('#email'),
+        Validator.minLength('#password',7)
+        
+
+    ]    
+})
+    </script>
 </body>
 </html>
