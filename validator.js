@@ -19,6 +19,7 @@ function Validator(options){
 
     var formElement = document.querySelector(options.form)
     console.log(formElement) 
+    console.log(options)
 
 
     // Lấy element của form cần validate
@@ -27,8 +28,9 @@ function Validator(options){
         options.rules.forEach(function (rule){
         // Dùng formElement thay cho document vì nếu 3 form đều có # fullname
         // hay #email thì bài toán sẽ lỗi, nên lấy trong form
+        // Liệt kê ra từng thẻ input có chứa rule.selector
             var inputElement = formElement.querySelector(rule.selector)
-            console.log(inputElement)
+            console.log(inputElement) 
             
 
             if(inputElement) {
@@ -61,7 +63,6 @@ Validator.isRequired = function (selector) {
             return value.trim() ? undefined : 'Vui lòng nhập trường này'
         }
     }
-             
 }
 
 Validator.isEmail = function(selector) {
