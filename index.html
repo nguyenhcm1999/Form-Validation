@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <title>Validation</title>
 </head>
 <body>
     <div class="main">
@@ -54,12 +54,20 @@
     rules: [
         //truyền vô css selector mình muốn 
         // chạy 2 hàm dưới để nhận lại 
-        Validator.isRequired('#fullname'),
+        Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
+        Validator.isRequired('#email'),
         Validator.isEmail('#email'),
-        Validator.minLength('#password',7)
-        
+        Validator.minLength('#password',7),
+        Validator.isRequired('#password_confirmation'),
+        Validator.isConfirmed('#password_confirmation', function(){
+            return document.querySelector('#form-1 #password').value
+        },'Mật khẩu nhập lại không chính xác')
+    ],
+    onSubmit: function (data) {
+      // Call API
+      console.log(data)
+    }
 
-    ]    
 })
     </script>
 </body>
