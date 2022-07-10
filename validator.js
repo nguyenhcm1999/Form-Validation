@@ -3,6 +3,15 @@
 
 function Validator(options){
 
+    function getParent(element, selector) {
+        while (element.parentElement) {
+            if (element.parentElement.matches(selector)){
+                return element.parentElement
+            }
+            element = element.parentElement
+        }
+    }
+
     var selectorRules = {};
 
     // Hàm thực hiện validate
@@ -11,13 +20,12 @@ function Validator(options){
         // test func: rule.test
 
         // hàm errorElement dùng để lấy ra đúng form message từ cái inputElement
-        var errorElement = inputElement.parentElement.querySelector('.form-message')
+        var errorElement = getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector)
         // console.log(errorElement)
-        // console.log(inputElement.parentElement)
+        // console.log(getParent(inputElement,options.formGroupSelector))
         // hàm errorMessage dùng để kiểm tra nội dung nhập vào
         // var errorMessage = rule.test(inputElement.value) 
         var errorMessage;
-        
         // Lấy ra các rules của selector
         var rules = selectorRules[rule.selector];
         
@@ -31,10 +39,10 @@ function Validator(options){
         // Nếu như có lỗi sẽ hiển thị 
         if (errorMessage){
             errorElement.innerText = errorMessage;
-            inputElement.parentElement.classList.add('invalid') 
+            getParent(inputElement,options.formGroupSelector).classList.add('invalid') 
         } else {
             errorElement.innerText = ''
-            inputElement.parentElement.classList.remove('invalid')
+            getParent(inputElement,options.formGroupSelector).classList.remove('invalid')
             }
 
         // covert errorMessage thành boolen
@@ -73,7 +81,8 @@ function Validator(options){
                     console.log(Array.from(enableInputs))
                     // Array.from() convert thành 1 array
                     var formValues = Array.from(enableInputs).reduce(function(values,input){
-                        return (values[input.name] = input.value) && values
+                        values[input.name] = input.value
+                        return values
                     },{})    
 
                     options.onSubmit(formValues)
@@ -116,12 +125,13 @@ function Validator(options){
                 
                 // Xử lý mỗi khi người dùng nhập vào input
                 inputElement.oninput = function (){
-                    var errorElement = inputElement.parentElement.querySelector(options.errorSelector)
+                    var errorElement = getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector)
                     errorElement.innerText = ''
-                    inputElement.parentElement.classList.remove('invalid')
+                    getParent(inputElement,options.formGroupSelector).classList.remove('invalid')
                 }
             }
         });
+        // for(var i in selectorRules){console.log(selectorRules[i])}
         // console.log(selectorRules)
     }
 }
