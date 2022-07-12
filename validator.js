@@ -5,6 +5,7 @@ function Validator(options){
 
     function getParent(element, selector) {
         while (element.parentElement) {
+            // nếu thẻ cha của element khớp với selector thì dừng
             if (element.parentElement.matches(selector)){
                 return element.parentElement
             }
@@ -28,11 +29,20 @@ function Validator(options){
         var errorMessage;
         // Lấy ra các rules của selector
         var rules = selectorRules[rule.selector];
-        
+        // console.log(selectorRules)
         // Lặp qua từng rule & kiểm tra
         for (var i = 0; i < rules.length; ++ i) {
+            switch(inputElement.type){
+                case 'radio':
+                case 'checkbox':
+                    errorMessage = rules[i](
+                        formElement.querySelector(rule.selector + ':checked')
+                    )
+                    break;
+                default:
+                    errorMessage = rules[i](inputElement.value)
+            }
             // rules[i] là rule.test()
-            errorMessage = rules[i](inputElement.value)
             if (errorMessage) break;
         }
 
@@ -78,10 +88,20 @@ function Validator(options){
                 // Trường hợp submit với javscript
                 if (typeof options.onSubmit === 'function') {
                     var enableInputs = formElement.querySelectorAll('[name]')
-                    console.log(Array.from(enableInputs))
-                    // Array.from() convert thành 1 array
+                    // console.log(Array.from(enableInputs))
+                    // Array.from() convert thành 1 array, trả về các thẻ input chứa thuộc tính name
                     var formValues = Array.from(enableInputs).reduce(function(values,input){
-                        values[input.name] = input.value
+                        switch(input.type) {
+                            case'radio':
+                            case'checkbox':
+                                values[input.name] = formElement.querySelector('input[name="' + input.name +  '"]:checked').value 
+                                
+                            break
+                            default:
+                                values[input.name] = input.value
+                        }
+                        
+                        console.log(values)
                         return values
                     },{})    
 
@@ -111,11 +131,10 @@ function Validator(options){
         // Dùng formElement thay cho document vì nếu 3 form đều có # fullname
         // hay #email thì bài toán sẽ lỗi, nên lấy trong form
         // Từ element chứa form1 liệt kê ra từng thẻ input có chứa rule.selector
-            var inputElement = formElement.querySelector(rule.selector)
-            // console.log(inputElement) 
-            // console.log(rule)
-
-            if(inputElement) {
+            var inputElements = formElement.querySelectorAll(rule.selector)
+            //trả về Nodelist tính chất gần giống array nhưng không có phương thức foreach map reduce ...
+            
+            Array.from(inputElements).forEach(function(inputElement){
                 // Xử lý trường hợp blur khỏi input
                 inputElement.onblur = function(){
                     validate(inputElement,rule)
@@ -129,7 +148,10 @@ function Validator(options){
                     errorElement.innerText = ''
                     getParent(inputElement,options.formGroupSelector).classList.remove('invalid')
                 }
-            }
+            })
+            // console.log(inputElement) 
+            // console.log(rule)
+
         });
         // for(var i in selectorRules){console.log(selectorRules[i])}
         // console.log(selectorRules)
@@ -146,7 +168,7 @@ Validator.isRequired = function (selector, message) {
         selector: selector,
         test: function (value) {
             // .trim() loại bỏ tất cả dấu cách 2 bên đầu của chuỗi
-            return value.trim() ? undefined : message || 'Vui lòng nhập trường này'
+            return value ? undefined : message || 'Vui lòng nhập trường này'
         }
     }
 }
