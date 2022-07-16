@@ -141,7 +141,7 @@ function Validator(options){
         // bằng một mảng có phần tử đầu tiên là rule đầu tiên
             selectorRules[rule.selector] = [rule.test];
         }
-        
+        // console.log(selectorRules)
 
         // Dùng formElement thay cho document vì nếu 3 form đều có # fullname
         // hay #email thì bài toán sẽ lỗi, nên lấy trong form
