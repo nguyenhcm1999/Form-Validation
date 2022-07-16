@@ -38,20 +38,37 @@
           <div class="form-group">
             <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
             <input id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+            
+            <span class="form-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="avatar" class="form-label">Ảnh đại diện</label>
+            <input id="avatar" name="avatar" placeholder="Ảnh đại diện" type="file" class="form-control">
+            <span class="form-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="province" class="form-label">Tỉnh / Thành Phố</label>
+            <select id="province" name="province" class="form-control">
+              <option value="">---Chọn Tỉnh / Thành Phố</option>></option>
+              <option value="hni">---Hà Nội</option>></option>
+              <option value="hpg">---Hải Phòng</option>></option>
+            </select>
             <span class="form-message"></span>
           </div>
 
           <div class="form-group">
             <div>
-              <input name ="gender" type="radio" value="male" class="form-control">
+              <input name ="gender" type="checkbox" value="male" class="form-control">
               Nam
             </div>
             <div>
-              <input name ="gender" type="radio" value="female" class="form-control">
+              <input name ="gender" type="checkbox" value="female" class="form-control">
               Nữ
             </div>
             <div>
-              <input name ="gender" type="radio" value="other"  class="form-control">
+              <input name ="gender" type="checkbox" value="other"  class="form-control">
               Khác
             </div>
             <span class="form-message"></span>
@@ -71,15 +88,17 @@
     rules: [
         //truyền vô css selector mình muốn 
         // chạy 2 hàm dưới để nhận lại 
-        Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
-        Validator.isRequired('#email'),
-        Validator.isEmail('#email'),
-        Validator.minLength('#password',7),
-        Validator.isRequired('input[name="gender"]'),
-        Validator.isRequired('#password_confirmation'),
-        Validator.isConfirmed('#password_confirmation', function(){
-            return document.querySelector('#form-1 #password').value
-        },'Mật khẩu nhập lại không chính xác')
+        // Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
+        // Validator.isRequired('#email'),
+        // Validator.isEmail('#email'),
+        Validator.isRequired('#avatar'),
+        // Validator.minLength('#password',7),
+        // Validator.isRequired('input[name="gender"]'),
+        // Validator.isRequired('#password_confirmation'),
+        // Validator.isRequired('#province'),
+        // Validator.isConfirmed('#password_confirmation', function(){
+        //     return document.querySelector('#form-1 #password').value
+        // },'Mật khẩu nhập lại không chính xác')
     ],
     onSubmit: function (data) {
       // Call API
