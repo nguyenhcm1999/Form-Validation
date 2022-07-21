@@ -21,7 +21,7 @@ function Validator(options){
         // test func: rule.test
 
         // hàm errorElement dùng để lấy ra đúng form message từ cái inputElement
-        var errorElement = getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector)
+        var errorElement = getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector) 
         // console.log(errorElement)
         // console.log(getParent(inputElement,options.formGroupSelector))
         // hàm errorMessage dùng để kiểm tra nội dung nhập vào
@@ -30,8 +30,10 @@ function Validator(options){
         // Lấy ra các rules của selector
         var rules = selectorRules[rule.selector];
         // console.log(selectorRules)
+        
         // Lặp qua từng rule & kiểm tra
         for (var i = 0; i < rules.length; ++ i) {
+            
             switch(inputElement.type){
                 case 'radio':
                 case 'checkbox':
@@ -97,8 +99,10 @@ function Validator(options){
                                 values[input.name] = formElement.querySelector('input[name="' + input.name +  '"]:checked').value   
                                 break;                              
                             case'checkbox':
-                                if(!input.matches(':checked')){
+                                if(!input.matches(':checked') && !values[input.name]){
                                     values[input.name] = ''
+                                }
+                                if(!input.matches(':checked')){
                                     return values;
                                 } 
                                 if(!Array.isArray(values[input.name])) {
@@ -106,13 +110,15 @@ function Validator(options){
                                 }
                                 
                                 values[input.name].push(input.value)
+
+                                
                                 break
                             case 'file':
                                 values[input.name] = input.files;
                                 break
                             default:
                                 values[input.name] = input.value 
-                        }
+                        }   
                         
                         console.log(values)
                         return values
@@ -141,12 +147,13 @@ function Validator(options){
         // bằng một mảng có phần tử đầu tiên là rule đầu tiên
             selectorRules[rule.selector] = [rule.test];
         }
-        // console.log(selectorRules)
+        console.log(selectorRules)
 
         // Dùng formElement thay cho document vì nếu 3 form đều có # fullname
         // hay #email thì bài toán sẽ lỗi, nên lấy trong form
         // Từ element chứa form1 liệt kê ra từng thẻ input có chứa rule.selector
             var inputElements = formElement.querySelectorAll(rule.selector)
+            // console.log(inputElements)
             //trả về Nodelist tính chất gần giống array nhưng không có phương thức foreach map reduce ...
             
             Array.from(inputElements).forEach(function(inputElement){
@@ -155,6 +162,7 @@ function Validator(options){
                     validate(inputElement,rule)
                     // console.log(rule.test(inputElement.value))
                     // console.log(inputElement.value)
+                    console.log(rule)
                 }
                 
                 // Xử lý mỗi khi người dùng nhập vào input
