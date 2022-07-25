@@ -108,18 +108,14 @@ function Validator(options){
                                 if(!Array.isArray(values[input.name])) {
                                     values[input.name] = []
                                 }
-                                
                                 values[input.name].push(input.value)
-
-                                
                                 break
                             case 'file':
                                 values[input.name] = input.files;
                                 break
                             default:
                                 values[input.name] = input.value 
-                        }   
-                        
+                        }
                         console.log(values)
                         return values
                     },{})    
@@ -140,14 +136,14 @@ function Validator(options){
 
         // Lưu lại các rules cho mỗi input      
 
-        if (Array.isArray(selectorRules[rule.selector])) {
-            selectorRules[rule.selector].push(rule.test)
-        } else {
-        // Trong lần chạy đầu tiên, array không phải là mảng thì mình gán cho nó
-        // bằng một mảng có phần tử đầu tiên là rule đầu tiên
-            selectorRules[rule.selector] = [rule.test];
-        }
-        console.log(selectorRules)
+            if (Array.isArray(selectorRules[rule.selector])) {
+                selectorRules[rule.selector].push(rule.test)
+            } else {
+            // Trong lần chạy đầu tiên, array không phải là mảng thì mình gán cho nó
+            // bằng một mảng có phần tử đầu tiên là rule đầu tiên
+                selectorRules[rule.selector] = [rule.test];
+            }
+            console.log(selectorRules)
 
         // Dùng formElement thay cho document vì nếu 3 form đều có # fullname
         // hay #email thì bài toán sẽ lỗi, nên lấy trong form

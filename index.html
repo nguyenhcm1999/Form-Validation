@@ -88,12 +88,12 @@
     rules: [
         // truyền vô css selector mình muốn 
         // chạy 2 hàm dưới để nhận lại 
-        // Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
-        // Validator.isRequired('#email'),
-        // Validator.isEmail('#email'),
+        Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
+        Validator.isRequired('#email'),
+        Validator.isEmail('#email'),
         // Validator.isRequired('#avatar'),
         // Validator.minLength('#password',7),
-        // Validator.isRequired('input[name="gender"]'),
+        Validator.isRequired('input[name="gender"]'),
         // Validator.isRequired('#password_confirmation'),
         // Validator.isRequired('#province'),
         // Validator.isConfirmed('#password_confirmation', function(){
