@@ -29,9 +29,10 @@ function Validator(options){
         var errorMessage;
         // Lấy ra các rules của selector
         var rules = selectorRules[rule.selector];
-        // console.log(selectorRules)
+        // console.log(rules)
         
         // Lặp qua từng rule & kiểm tra
+
         for (var i = 0; i < rules.length; ++ i) {
             
             switch(inputElement.type){
@@ -40,9 +41,11 @@ function Validator(options){
                     errorMessage = rules[i](
                         formElement.querySelector(rule.selector + ':checked')
                     )
+                    console.log(errorMessage)
                     break;
                 default:
                     errorMessage = rules[i](inputElement.value)
+                    console.log(errorMessage)
             }
             // rules[i] là rule.test()
             if (errorMessage) break;
@@ -79,7 +82,7 @@ function Validator(options){
             // Lặp qua từng rules và validate
             options.rules.forEach(function (rule){
                 var inputElement = formElement.querySelector(rule.selector)
-                var isValid = validate(inputElement,rule)
+                isValid = validate(inputElement,rule)
                 // console.log(isValid)
                 if (!isValid){
                     isFormValid = false;
