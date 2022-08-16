@@ -88,7 +88,7 @@ function Validator(options){
                     isFormValid = false;
                 }
             });
-            
+
             if (isFormValid) {
                 // Trường hợp submit với javscript
                 if (typeof options.onSubmit === 'function') {
@@ -147,12 +147,12 @@ function Validator(options){
                 selectorRules[rule.selector] = [rule.test];
             }
             console.log(selectorRules)
-
+            // console.log(rule)
         // Dùng formElement thay cho document vì nếu 3 form đều có # fullname
         // hay #email thì bài toán sẽ lỗi, nên lấy trong form
         // Từ element chứa form1 liệt kê ra từng thẻ input có chứa rule.selector
             var inputElements = formElement.querySelectorAll(rule.selector)
-            // console.log(inputElements)
+            console.log(inputElements)
             //trả về Nodelist tính chất gần giống array nhưng không có phương thức foreach map reduce ...
             
             Array.from(inputElements).forEach(function(inputElement){
